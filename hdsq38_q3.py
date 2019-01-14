@@ -38,11 +38,11 @@ def good_expression(expression):
         if expression[char] == "(":
             operators.push([])
         elif expression[char] == ")":
-            if len(operators.top()) == 0 or "+" not in operators.top():
+            if len(operators.top()) == 0 or not "+" in operators.top():
                 return False
             operators.pop()
             if not char == len(expression) - 1 and len(operators.top()) > 0:
-                if expression[char + 1] == "+" and operators.top()[-1] == "+":
+                if (expression[char + 1] != "x" and expression[char + 1] != "*") and (operators.top()[-1] != "x" and operators.top()[-1] != "*"):
                     return False
             elif not char == len(expression) - 1:
                 if expression[char + 1] == "+":
