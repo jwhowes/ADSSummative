@@ -1,5 +1,3 @@
-all_p = {}
-
 def k_child(n, k):
     num = 0
     for char in str(n):
