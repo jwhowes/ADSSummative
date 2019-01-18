@@ -25,6 +25,7 @@ class Stack:
 ###########################################################
 
 def isInt(n):
+    '''Returns whether or not a string is a number'''
     try:
         int(n)
         return True
@@ -32,15 +33,30 @@ def isInt(n):
         return False
 
 def good_expression(expression):
+    '''Returns whether or not an expression is good'''
+    #operators is a stack storing all the operators
     operators = Stack()
     operators.push([])
+    #plus is a stack storing whether or not each bracket contains a plus
+    plus = Stack()
+    plus.push(True)
     for char in range(0, len(expression)):
+        #If a plus is found the top value for plus should be set to true (to mark that the bracket contains a plus)
+        if expression[char] == "+":
+            plus.pop()
+            plus.push(True)
+        #When an open bracket is found, new items are added to each of the stack so that each bracket is given its own node
         if expression[char] == "(":
             operators.push([])
+            #By default, it is assumed there is no plus in the bracket
+            plus.push(False)
         elif expression[char] == ")":
-            if len(operators.top()) == 0 or not "+" in operators.top():
+            #If a bracket contains no operators or no pluses it is redundant
+            if len(operators.top()) == 0 or not plus.top():
                 return False
+            plus.pop()
             operators.pop()
+            #If a bracket is not multiplied by anything it is redundant
             if not char == len(expression) - 1 and len(operators.top()) > 0:
                 if (expression[char + 1] != "x" and expression[char + 1] != "*") and (operators.top()[-1] != "x" and operators.top()[-1] != "*"):
                     return False
@@ -50,8 +66,10 @@ def good_expression(expression):
             elif len(operators.top()) > 0:
                 if operators.top()[-1] == "+":
                     return False
+        #If the character is not a number or a bracket (and therefore an operator), it should be added to the current node in the operator stack
         elif not isInt(expression[char]):
             operators.top().append(expression[char])
+    #If the first node in the stack had no operators (and therefore there was a bracket around the entire expression), there were redundant brackets
     if len(operators.top()) == 0:
         return False
     return True
