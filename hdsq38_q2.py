@@ -14,11 +14,10 @@ def k_ephemeral(n, k, prev = {}, all_p = {}):
         return all_p[n]
     #If n is in the dictionary of previously checked values (for this n), it is k eternal
     if n in prev:
-        for i in prev:
-            all_p[i] = False
+        all_p.update(prev)
         return False
     #n is added to and prev so that future values can be checked to see if they are k eternal
-    prev[n] = True
+    prev[n] = False
     #If n fails the base cases the function recurses with the k child of n
     return k_ephemeral(k_child(n, k), k, prev, all_p)
 
