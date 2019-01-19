@@ -1,9 +1,27 @@
-def k_child(n, k):
-    '''Finds the k child of a number'''
+k2 = [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+k3 = [0, 1, 8, 27, 64, 125, 343, 512, 729]
+k4 = [0, 1, 16, 81, 256, 625, 196, 2401, 4096, 6561]
+
+'''def k_child(n, k):
     num = 0
     for char in str(n):
         num += int(char)**k
-    return num
+    return num'''
+
+def k_child(n, k):
+    global k2
+    global k3
+    global k4
+    result = 0
+    if k == 2:
+        ks = k2
+    elif k == 3:
+        ks = k3
+    else:
+        ks = k4
+    for i in str(n):
+        result += ks[int(i)]
+    return result
 
 def k_ephemeral(n, k, prev = {}, all_p = {}):
     '''Evaluates whether or not a given number is k ephemeral'''
