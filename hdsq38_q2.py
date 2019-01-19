@@ -1,14 +1,10 @@
+#Lists k2, k3, and k4 store all the numbers 0**ki through 9**ki respectively
 k2 = [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
-k3 = [0, 1, 8, 27, 64, 125, 343, 512, 729]
-k4 = [0, 1, 16, 81, 256, 625, 196, 2401, 4096, 6561]
-
-'''def k_child(n, k):
-    num = 0
-    for char in str(n):
-        num += int(char)**k
-    return num'''
+k3 = [0, 1, 8, 27, 64, 125, 216, 343, 512, 729]
+k4 = [0, 1, 16, 81, 256, 625, 1296, 2401, 4096, 6561]
 
 def k_child(n, k):
+    '''Returns the k child of a given number'''
     global k2
     global k3
     global k4
@@ -19,6 +15,8 @@ def k_child(n, k):
         ks = k3
     else:
         ks = k4
+    #Instead of raising each digit to the power k, the function indexes the correct array, pulling the value of i**k from there
+    #This is faster than performing the floating point operation (**) log10(n) times
     for i in str(n):
         result += ks[int(i)]
     return result
@@ -40,6 +38,7 @@ def k_ephemeral(n, k, prev = {}, all_p = {}):
     return k_ephemeral(k_child(n, k), k, prev, all_p)
 
 def count_ephemeral(n1, n2, k):
+    '''Counts the number of k ephemeral numbers between n1 and n2'''
     num = 0
     #All p is set up as a dictionary of previous values with 1 instantly passing
     all_p = {}
